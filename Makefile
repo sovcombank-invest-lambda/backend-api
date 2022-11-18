@@ -1,11 +1,17 @@
+include .env
+export
+
 prepare:
-	echo preapring
+	python -m venv .venv
+	source .venv/bin/activate
+	pip install -r requirements.txt
 
 services:
-	echo services
+	docker compose up -d
+	make migrate
 
 run:
-	echo run
+	uvicorn service.__main__:app  --host 0.0.0.0 --port=${FASTAPI_PORT} --log-level=warning --reload
 
 migrate:
 	cd migrator && alembic upgrade head
