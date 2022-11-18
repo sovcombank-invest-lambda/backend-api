@@ -1,0 +1,27 @@
+name: MyDeploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: make prepare
+
+  Services:
+    runs-on: ubuntu-latest
+    needs: [Prepare]
+    steps:
+      - uses: actions/checkout@v2
+      - run: make services
+
+  Run:
+    runs-on: ubuntu-latest
+    needs: [Services]
+    steps:
+      - uses: actions/checkout@v2
+      - run: make run
