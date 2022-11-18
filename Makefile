@@ -1,13 +1,11 @@
 prepare:
-	echo preparing
+	echo preapring
 
 services:
-	echo bringin up services
+	echo services
 
 run:
-	echo running up
-
-
+	echo run
 
 migrate:
 	cd migrator && alembic upgrade head
