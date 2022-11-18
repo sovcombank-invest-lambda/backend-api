@@ -8,7 +8,7 @@ from sqlalchemy.dialects.postgresql import UUID, TSVECTOR, ENUM
 from pytz import UTC
 from migrations.models.currency import Currency
 
-from migrator.base import DeclarativeBase
+from migrations.migrator.base import DeclarativeBase
 
 
 class Transactions(DeclarativeBase):

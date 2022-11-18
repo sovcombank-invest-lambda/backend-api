@@ -6,7 +6,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from migrator.base import DeclarativeBase
+from migrations.migrator.base import DeclarativeBase
 from migrations.models.users import Users
 
 
@@ -23,7 +23,9 @@ config.set_section_option(section, "POSTGRES_DATABASE", getenv("POSTGRES_DATABAS
 config.set_section_option(
     section, "POSTGRES_HOST", getenv("POSTGRES_HOST", "localhost")
 )
-
+config.set_section_option(
+    section, "POSTGRES_PORT", getenv("POSTGRES_PORT", "5432")
+)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

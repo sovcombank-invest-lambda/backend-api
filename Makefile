@@ -1,6 +1,17 @@
 prepare:
-  echo preparing
+	echo preparing
+	
 services:
-  echo bringin up services
+	echo bringin up services
+
 run:
-  echo running up
+	echo running up
+
+migrate:
+	cd migrator && alembic upgrade head
+
+downgrade:
+	cd migrator && alembic downgrade -1
+
+revision:
+	cd migrator && alembic revision --autogenerate

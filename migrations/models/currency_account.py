@@ -10,7 +10,7 @@ from migrations.models.currency import Currency
 
 from pytz import UTC
 
-from migrator.base import DeclarativeBase
+from migrations.migrator.base import DeclarativeBase
 
 
 class CurrencyAccount(DeclarativeBase):
