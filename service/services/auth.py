@@ -4,7 +4,6 @@ from sqlalchemy.exc import IntegrityError
 
 from migrations.models.users import Users
 from service.exceptions.common import BadRequest,NotFoundException
-from service.schemas.common import JobsOut
 
 
 async def add_new_user(login: str, hashed_password: str, session: AsyncSession) -> None:
