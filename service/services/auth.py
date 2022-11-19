@@ -6,11 +6,12 @@ from migrations.models.users import Users
 from service.exceptions.common import BadRequest,NotFoundException
 
 
-async def add_new_user(login: str, hashed_password: str, session: AsyncSession) -> None:
+async def add_new_user(login: str, hashed_password: str, email: str, session: AsyncSession) -> None:
     try:
         query = insert(Users).values(
             username=login,
-            password=hashed_password,
+            email=email,
+            hashed_password=hashed_password,
         )
         await session.execute(query)
         await session.commit()

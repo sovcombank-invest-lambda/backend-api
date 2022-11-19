@@ -17,6 +17,7 @@ auth_router = APIRouter(tags=["Аутентификация"])
 @auth_router.post("/user/register", response_model=SuccessfullResponse)
 async def user_register(
     request: OAuth2PasswordRequestForm = Depends(),
+    email: str = Form(),
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     request.password = get_password_hash(request.password)
