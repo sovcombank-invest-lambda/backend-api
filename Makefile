@@ -10,6 +10,7 @@ prepare-local:
 	pip install -r requirements.txt
 
 services:
+	docker compose down
 	docker compose up -d
 
 run:
