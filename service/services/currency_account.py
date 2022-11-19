@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from migrations.models.currency_account import CurrencyAccount
 from service.exceptions.common import BadRequest,NotFoundException
 from service.schemas.auth import UserIn
+from migrations.models.currency import Currency
 
 async def create_currency_account(name: str, currency_id: UUID, user_id: UUID, session: AsyncSession) -> None:
     try:
@@ -39,3 +40,8 @@ async def delete_currency_account(currency_account_id: UUID, user_id: UUID, sess
         await session.commit()
     except IntegrityError as e:
         raise NotFoundException("User/Currency not found")
+    
+async def get_currencies(session: AsyncSession) -> list[Currency]:
+    query = select(CurrencyAccount)
+    result = await session.execute(query).scalars().all()
+    return result
