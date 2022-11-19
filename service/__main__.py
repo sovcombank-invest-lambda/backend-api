@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 
 from service.exceptions.common import CommonException, InternalServerError
 from service.utils.logger import Log
-
+from starlette.middleware.cors import CORSMiddleware
 
 from service.endpoints.auth import auth_router
 from service.endpoints.currency_account import currency_account_router
