@@ -21,6 +21,7 @@ async def add_new_user(login: str, hashed_password: str, user_in: UserIn, sessio
         await session.commit()
     except IntegrityError as e:
         raise BadRequest("User already exist", e) from e
+
 async def get_user(login: str, session: AsyncSession) -> Users:
     query = select(Users).where(
         Users.username == login

@@ -25,3 +25,7 @@ class Currency(BaseModel):
     fullname: str = Field(..., description='Полное название валюты')
     value: float = Field(..., description='Курс валюты')
     
+class CurrencyTransaction(BaseModel):
+    change_value: float = Field(..., description="Изменение средств на счете")
+    currency_account_id: UUID = Field(..., description="UUID валютного счета")
+    
