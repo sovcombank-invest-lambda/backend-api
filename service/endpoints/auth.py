@@ -35,6 +35,6 @@ async def user_login(request: OAuth2PasswordRequestForm = Depends(),
     user = await get_user(request.username, session)
     if not verify_password(request.password, user.hashed_password):
         raise ForbiddenException("Wrong password")
-    access_token = create_access_token(data={"sub": user.username})
+    access_token = create_access_token(data={"sub": user.phone})
     token = TokenOut(access_token=access_token, token_type="bearer")
     return token
