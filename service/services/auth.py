@@ -7,14 +7,14 @@ from service.exceptions.common import BadRequest,NotFoundException
 from service.schemas.auth import UserIn
 
 
-async def add_new_user(login: str, hashed_password: str, user_in: UserIn, session: AsyncSession) -> None:
+async def add_new_user(login: str, hashed_password: str, session: AsyncSession) -> None:
     try:
         query = insert(Users).values(
             phone=login,
             hashed_password=hashed_password,
-            **({'gender': user_in.gender} if user_in.gender else {}),
-            **({'name': user_in.name} if user_in.name else {}),
-            **({'surname': user_in.surname} if user_in.surname else {}),
+            # **({'gender': user_in.gender} if user_in.gender else {}),
+            # **({'name': user_in.name} if user_in.name else {}),
+            # **({'surname': user_in.surname} if user_in.surname else {}),
         )
         await session.execute(query)
         await session.commit()
