@@ -8,7 +8,10 @@ from alembic import context
 
 from migrations.migrator.base import DeclarativeBase
 from migrations.models.users import Users
-
+from migrations.models.currency import Currency
+from migrations.models.currency_account import CurrencyAccount
+from migrations.models.news import News
+from migrations.models.transactions import Transactions
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -21,7 +24,7 @@ config.set_section_option(
 )
 config.set_section_option(section, "POSTGRES_DATABASE", getenv("POSTGRES_DATABASE", "invest"))
 config.set_section_option(
-    section, "POSTGRES_HOST", getenv("POSTGRES_HOST", "localhost")
+    section, "POSTGRES_HOST", getenv("POSTGRES_HOST", "92.63.102.99")
 )
 config.set_section_option(
     section, "POSTGRES_PORT", getenv("POSTGRES_PORT", "5432")
