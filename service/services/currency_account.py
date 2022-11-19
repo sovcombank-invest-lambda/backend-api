@@ -24,8 +24,8 @@ async def create_currency_account(name: str, currency_id: UUID, user_id: UUID, s
         raise NotFoundException("User/Currency not found") from e
 
 async def get_currency_accounts(user_id: UUID, session: AsyncSession) -> List[CurrencyAccount]:
-    query = select(Currency).where(
-        Currency.user_id == user_id
+    query = select(CurrencyAccount).where(
+        CurrencyAccount.user_id == user_id
     )
     result = (await session.execute(query)).scalars().all()
     if not result:
@@ -44,7 +44,7 @@ async def delete_currency_account(currency_account_id: UUID, user_id: UUID, sess
         raise NotFoundException("User/Currency not found") from e
     
 async def get_currencies(session: AsyncSession) -> List[Currency]:
-    query = select(CurrencyAccount)
+    query = select(Currency)
     result = (await session.execute(query)).scalars().all()
     return result
 
