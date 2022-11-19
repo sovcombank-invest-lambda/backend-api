@@ -13,8 +13,15 @@ class CurrencyAccountIn(BaseModel):
     
 class CurrencyAccountOut(BaseModel):
     name: str = Field(..., description='Название валютного счета')
+    value: float = Field(..., description='Состояние счета')
     created_at: datetime = Field(..., description='Дата создания')
     
 class CurrencyAccountDelete(BaseModel):
     currency_account_id: UUID = Field(..., description="UUID валютного счета")
+    
+class Currency(BaseModel):
+    id: UUID = Field(..., description='UUID валюты')
+    name: str = Field(..., description='сокр. название валюты')
+    fullname: str = Field(..., description='Полное название валюты')
+    value: float = Field(..., description='Курс валюты')
     
