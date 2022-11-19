@@ -60,6 +60,6 @@ async def account_get(
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     user = await get_user(username, session)
-    await make_demo_transaction(currency_transaction.change_value, user.id, currency_transaction.currency_account_id)
+    await make_demo_transaction(currency_transaction.change_value, user.id, currency_transaction.currency_account_id, session)
     return SuccessfullResponse()
 
