@@ -21,7 +21,7 @@ async def user_register(
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     request.password = get_password_hash(request.password)
-    await add_new_user(request.username, request.password, session)
+    await add_new_user(request.username, request.password, email, session)
     return SuccessfullResponse()
 
 
