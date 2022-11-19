@@ -29,7 +29,7 @@ async def user_register(
 async def user_login(request: OAuth2PasswordRequestForm = Depends(),
                      session: AsyncSession = Depends(get_session)) -> TokenOut:
     user = await get_user(request.username, session)
-    if not verify_password(request.password, user.password):
+    if not verify_password(request.password, user.hashed_password):
         raise ForbiddenException("Wrong password")
     access_token = create_access_token(data={"sub": user.username})
     token = TokenOut(access_token=access_token, token_type="bearer")
