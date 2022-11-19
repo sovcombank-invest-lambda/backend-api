@@ -3,7 +3,7 @@ export
 
 prepare:
 	python3 -m venv .venv
-	source .venv/bin/activate
+	. .venv/bin/activate
 	pip install -r requirements.txt
 
 services:
@@ -14,10 +14,10 @@ run:
 	uvicorn service.__main__:app  --host 0.0.0.0 --port=${FASTAPI_PORT} --log-level=warning --reload
 
 migrate:
-	cd migrator && alembic upgrade head
+	cd migrations && alembic upgrade head
 
 downgrade:
-	cd migrator && alembic downgrade -1
+	cd migrations && alembic downgrade -1
 
 revision:
-	cd migrator && alembic revision --autogenerate
+	cd migrations && alembic revision --autogenerate
