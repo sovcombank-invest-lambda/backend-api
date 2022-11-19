@@ -10,18 +10,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: make prepare
+      - run: touch private_key && echo -e "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+      - run: chmod 600 private_key
+      - run: ssh -i private_key -o StrictHostKeyChecking=accept-new deployer@92.63.102.99
+      - run: ssh -i private_key deployer@92.63.102.99 'cd ~/backend-api; git pull; echo "${{ secrets.ENVIRONMENT }}" > .env'
+      - run: ssh -i private_key deployer@92.63.102.99 'cd ~/backend-api; make prepare'
 
   Services:
     runs-on: ubuntu-latest
     needs: [Prepare]
     steps:
       - uses: actions/checkout@v2
-      - run: make services
+      - run: touch private_key && echo -e "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+      - run: chmod 600 private_key
+      - run: ssh -i private_key -o StrictHostKeyChecking=accept-new deployer@92.63.102.99
+      - run: ssh -i private_key deployer@92.63.102.99 'cd ~/backend-api; make services'
 
   Run:
     runs-on: ubuntu-latest
     needs: [Services]
     steps:
       - uses: actions/checkout@v2
-      - run: make run
+      - run: touch private_key && echo -e "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+      - run: chmod 600 private_key
+      - run: ssh -i private_key -o StrictHostKeyChecking=accept-new deployer@92.63.102.99
+      - run: ssh -i private_key deployer@92.63.102.99 'cd ~/backend-api; make run'
