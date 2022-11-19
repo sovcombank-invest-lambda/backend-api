@@ -33,7 +33,7 @@ async def account_create(
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     user = await get_user(username, session)
-    await delete_currency_account(currency_account, user.id, session)
+    await create_currency_account(currency_account.name, currency_account.currency_id, user.id, session)
     return SuccessfullResponse()
 
 
