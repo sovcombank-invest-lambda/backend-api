@@ -8,7 +8,6 @@ on:
 jobs:
   Services:
     runs-on: ubuntu-latest
-    needs: [Prepare]
     steps:
       - uses: actions/checkout@v2
       - run: touch private_key && echo -e "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
