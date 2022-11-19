@@ -6,6 +6,7 @@ class PostgresSettings(BaseSettings):
     POSTGRES_PASSWORD: str
     POSTGRES_DATABASE: str
     POSTGRES_HOST: str
+    POSTGRES_PORT: str
 
     class Config:
         env_file: str = ".env"
@@ -17,5 +18,6 @@ class PostgresSettings(BaseSettings):
             user=self.POSTGRES_USERNAME,
             password=self.POSTGRES_PASSWORD,
             host=self.POSTGRES_HOST,
+            port=self.POSTGRES_PORT,
             path=f"/{self.POSTGRES_DATABASE}",
         )
