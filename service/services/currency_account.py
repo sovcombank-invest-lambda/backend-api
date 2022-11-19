@@ -15,8 +15,8 @@ async def create_currency_account(name: str, currency_id: UUID, user_id: UUID, s
     try:
         query = insert(CurrencyAccount).values(
             name=name,
-            currency_id=currency_id,
-            user_id=user_id
+            currency_id=str(currency_id),
+            user_id=str(user_id)
         )
         await session.execute(query)
         await session.commit()
@@ -25,7 +25,7 @@ async def create_currency_account(name: str, currency_id: UUID, user_id: UUID, s
 
 async def get_currency_accounts(user_id: UUID, session: AsyncSession) -> List[CurrencyAccount]:
     query = select(CurrencyAccount).where(
-        CurrencyAccount.user_id == user_id
+        CurrencyAccount.user_id == str(user_id)
     )
     result = (await session.execute(query)).scalars().all()
     if not result:
@@ -35,8 +35,8 @@ async def get_currency_accounts(user_id: UUID, session: AsyncSession) -> List[Cu
 async def delete_currency_account(currency_account_id: UUID, user_id: UUID, session: AsyncSession) -> None:
     try:
         query = delete(CurrencyAccount).where(
-            CurrencyAccount.user_id == user_id,
-            CurrencyAccount.id == currency_account_id
+            CurrencyAccount.user_id == str(user_id),
+            CurrencyAccount.id == str(currency_account_id)
         )
         await session.execute(query)
         await session.commit()
@@ -50,15 +50,15 @@ async def get_currencies(session: AsyncSession) -> List[Currency]:
 
 async def make_demo_transaction(change_value: float, user_id: UUID, currency_account_id: UUID, session: AsyncSession) -> None:
     query = select(CurrencyAccount).where(
-        CurrencyAccount.id == currency_account_id,
-        CurrencyAccount.user_id == user_id
+        CurrencyAccount.id ==str( currency_account_id),
+        CurrencyAccount.user_id == str(user_id)
     )
     result = (await session.execute(query)).scalars().first()
     query1 = update(CurrencyAccount).values(
         value=result.value+change_value
     ).where(
-        CurrencyAccount.id == currency_account_id,
-        CurrencyAccount.user_id == user_id 
+        CurrencyAccount.id ==str(currency_account_id),
+        CurrencyAccount.user_id == str(user_id)
     )
     query2 = insert(Transactions).values(
         currency_account_id = currency_account_id,
