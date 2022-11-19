@@ -7,9 +7,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from service.utils.auth import create_access_token, get_password_hash, verify_password, get_current_user
 from service.exceptions.common import ForbiddenException 
-from service.schemas.common import SuccessfullResponse, TokenOut, JobsOut
+from service.schemas.common import SuccessfullResponse, TokenOut
 from migrations.connection.session import get_session
-from service.services.auth import add_new_user, get_user, get_jobs, update_user_job
+from service.services.auth import add_new_user, get_user
 
 auth_router = APIRouter(tags=["Аутентификация"])
 
