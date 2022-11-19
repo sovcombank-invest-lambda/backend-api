@@ -32,17 +32,17 @@ def upgrade() -> None:
     bind = op.get_bind() 
     session = sa.orm.Session(bind=bind)
     query1 = sa.insert(Currency).values(
-        name="₽",
+        name="rub",
         fullname="Rubles",
         value=1.0
     )
     query2 = sa.insert(Currency).values(
-        name="$",
+        name="usd",
         fullname="American dollars",
         value=60.0
     )
     query3 = sa.insert(Currency).values(
-        name="€",
+        name="eur",
         fullname="Euro",
         value=60.0
     )
