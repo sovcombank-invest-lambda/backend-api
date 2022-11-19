@@ -12,7 +12,7 @@ from service.endpoints.currency_account import currency_account_router
 from service.endpoints.exchange_rates import exchange_rates_router
 
 app = FastAPI(title="Invest backend API")
-
+origins = ["*"]
 
 @app.on_event("startup")
 async def startup() -> None:
@@ -56,6 +56,14 @@ async def log_requst(request: Request, call_next):
     )
     return response
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 app.include_router(auth_router)
 app.include_router(currency_account_router)
 app.include_router(exchange_rates_router)
