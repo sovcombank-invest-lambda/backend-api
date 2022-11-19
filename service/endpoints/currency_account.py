@@ -1,4 +1,5 @@
 from uuid import UUID
+from typing import List
 from fastapi import APIRouter, Form, Body
 from fastapi.param_functions import Depends
 from fastapi.security import OAuth2PasswordRequestForm
@@ -16,7 +17,7 @@ from migrations.models.users import Users
 
 currency_account_router = APIRouter(tags=["Валютный счет"])
 
-@currency_account_router.get("/user/account", response_model=list[CurrencyAccountOut])
+@currency_account_router.get("/user/account", response_model=List[CurrencyAccountOut])
 async def account_get(
     username: str = Depends(get_current_user),
     session: AsyncSession = Depends(get_session)
@@ -45,7 +46,7 @@ async def account_delete(
     await delete_currency_account(currency_account_delete.currency_account_id, user.id, session)
     return SuccessfullResponse()
 
-@currency_account_router.get("/currency", response_model=list[Currency])
+@currency_account_router.get("/currency", response_model=List[Currency])
 async def get_available_currencies(
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
