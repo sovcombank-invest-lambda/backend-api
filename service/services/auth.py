@@ -10,8 +10,7 @@ from service.schemas.auth import UserIn
 async def add_new_user(login: str, hashed_password: str, user_in: UserIn, session: AsyncSession) -> None:
     try:
         query = insert(Users).values(
-            username=login,
-            email=user_in.email,
+            phone=login,
             hashed_password=hashed_password,
             **({'gender': user_in.gender} if user_in.gender else {}),
             **({'name': user_in.name} if user_in.name else {}),
@@ -24,7 +23,7 @@ async def add_new_user(login: str, hashed_password: str, user_in: UserIn, sessio
 
 async def get_user(login: str, session: AsyncSession) -> Users:
     query = select(Users).where(
-        Users.username == login
+        Users.phone == login
     )
     result = (await session.execute(query)).scalars().first()
     if not result:

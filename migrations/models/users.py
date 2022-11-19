@@ -29,7 +29,6 @@ class Users(DeclarativeBase):
     surname = Column(String, nullable=True)
     gender = Column(ENUM(Gender), nullable=False, default=Gender.UNSPECIFIED)
     phone = Column(String, nullable=False, unique=True)
-    username = Column(String, nullable=False, unique=True)
     hashed_password = Column(String, nullable=False)
     avatar_id = Column(String, nullable=True)
     birth_date = Column(TIMESTAMP(timezone=True), nullable=True)
