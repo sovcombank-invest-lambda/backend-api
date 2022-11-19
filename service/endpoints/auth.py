@@ -10,6 +10,7 @@ from service.exceptions.common import ForbiddenException
 from service.schemas.common import SuccessfullResponse, TokenOut
 from migrations.connection.session import get_session
 from service.services.auth import add_new_user, get_user
+from service.schemas.auth import UserIn
 
 auth_router = APIRouter(tags=["Аутентификация"])
 
@@ -17,11 +18,11 @@ auth_router = APIRouter(tags=["Аутентификация"])
 @auth_router.post("/user/register", response_model=SuccessfullResponse)
 async def user_register(
     request: OAuth2PasswordRequestForm = Depends(),
-    email: str = Form(),
+    user_in: UserIn = Depends(),
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     request.password = get_password_hash(request.password)
-    await add_new_user(request.username, request.password, email, session)
+    await add_new_user(request.username, request.password, user_in, session)
     return SuccessfullResponse()
 
 
