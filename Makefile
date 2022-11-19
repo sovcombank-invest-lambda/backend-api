@@ -11,7 +11,6 @@ prepare-local:
 
 services:
 	docker compose up -d
-	make migrate
 
 run:
 	uvicorn service.__main__:app  --host 0.0.0.0 --port=${FASTAPI_PORT} --log-level=warning --reload

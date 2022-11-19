@@ -11,3 +11,13 @@ services:
       - POSTGRES_DB=${POSTGRES_DATABASE}
       - POSTGRES_USER=${POSTGRES_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "${FASTAPI_PORT}:${FASTAPI_PORT}"
+    depends_on:
+      - postgresql
+    restart: always
