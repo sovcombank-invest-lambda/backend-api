@@ -18,9 +18,9 @@ from migrations.models.transactions import Transactions
 config = context.config
 
 section = config.config_ini_section
-config.set_section_option(section, "POSTGRES_USERNAME", getenv("POSTGRES_USERNAME", "invest-user"))
+config.set_section_option(section, "POSTGRES_USERNAME", getenv("POSTGRES_USERNAME", "invest_user"))
 config.set_section_option(
-    section, "POSTGRES_PASSWORD", getenv("POSTGRES_PASSWORD", "invest-user-password")
+    section, "POSTGRES_PASSWORD", getenv("POSTGRES_PASSWORD", "invest_user_password")
 )
 config.set_section_option(section, "POSTGRES_DATABASE", getenv("POSTGRES_DATABASE", "invest"))
 config.set_section_option(

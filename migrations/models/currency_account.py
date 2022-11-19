@@ -18,6 +18,7 @@ class CurrencyAccount(DeclarativeBase):
 
     id = Column(UUID, unique=True, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String, nullable=False)
+    value = Column(Float, nullable=False, default=0.0)
     user_id = Column(UUID, ForeignKey(Users.id, ondelete="CASCADE"), nullable=False)
     currency_id = Column(UUID, ForeignKey(Currency.id, ondelete="CASCADE"), nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, default = lambda x: datetime.now(UTC))

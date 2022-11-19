@@ -10,10 +10,11 @@ prepare-local:
 	pip install -r requirements.txt
 
 services:
-	docker compose up -d
-	make migrate
+	docker compose down
+	docker compose up -d postgresql
 
 run:
+	make migrate
 	uvicorn service.__main__:app  --host 0.0.0.0 --port=${FASTAPI_PORT} --log-level=warning --reload
 
 migrate:
