@@ -18,15 +18,14 @@ class NERParser:
         self.segmenter = Segmenter()
 
     def get_ners_dict(self, text: str) -> dict:
-        """ Returns a dictionary of named entities in a text
-            Args:
-                text (str): text to parse
-                ner_model (slovnet.NER): ner model
+        """ Возвращает словарь именованных сущностей в тексте
+            Аргументы:
+                text (str): Текст для парсинга
+                ner_model (slovnet.NER): NER модель
 
-            Returns:
-                dict: dictionary of named entities in a text
+            Возвращает:
+                dict: результирующий словарь
             """
-            # Use this function with pandarallel's parallel_apply
         if not text:
             return {'ORGs': [], 'PERs': [], 'LOCs': [], 'NOUs': []}
         markup = self.ner(text)
@@ -39,13 +38,11 @@ class NERParser:
                 'LOC': LOCS,
 
             }[span.type].append(span_text)
-            # print(span.type, span_text)
         # Получить существительные из текста
         doc = Doc(text)
         doc.segment(self.segmenter)
         doc.tag_morph(self.morph_tagger)
         nouns = [_.text for _ in doc.tokens if _.pos == 'NOUN']
-        # print(nouns)
         return {'ORGs': ORGS if ORGS else [], 'PERs': PERS if PERS else [], 'LOCs': LOCS if LOCS else [], 'NOUs': nouns}
 
 
