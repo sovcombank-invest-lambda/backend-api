@@ -13,7 +13,8 @@ from migrations.connection.session import get_session
 from service.services.auth import add_new_user, get_user
 from service.services.currency_account import get_currency_accounts, create_currency_account, delete_currency_account, get_currencies, make_demo_transaction
 from service.schemas.currency_account import CurrencyAccountIn, CurrencyAccountDelete, CurrencyAccountOut, Currency, CurrencyTransaction
-from migrations.models.users import Users
+from service.exceptions.common import ForbiddenException
+from migrations.models.users import Users, Roles
 
 currency_account_router = APIRouter(tags=["Валютный счет"])
 
@@ -23,6 +24,8 @@ async def account_get(
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     user = await get_user(username, session)
+    if not user.role in {Roles.DEMO.value, Roles.REGULAR}:
+        raise ForbiddenException("User is not in DEMO mode")
     accounts = await get_currency_accounts(user.id, session)
     return [CurrencyAccountOut.from_orm(account) for account in accounts]
 
@@ -33,6 +36,9 @@ async def account_create(
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     user = await get_user(username, session)
+    if not user.role == Roles.DEMO.value:
+        raise ForbiddenException("User is not in DEMO mode")
+    # add account evaluation for REGULAR user
     await create_currency_account(currency_account.name, currency_account.currency_id, user.id, session)
     return SuccessfullResponse()
 
@@ -43,6 +49,8 @@ async def account_delete(
         username: str = Depends(get_current_user),
         session: AsyncSession = Depends(get_session)) -> SuccessfullResponse:
     user = await get_user(username, session)
+    if not user.role in {Roles.DEMO.value, Roles.REGULAR}:
+        raise ForbiddenException("User is not in DEMO mode")
     await delete_currency_account(currency_account_delete.currency_account_id, user.id, session)
     return SuccessfullResponse()
 
@@ -60,6 +68,8 @@ async def account_get(
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     user = await get_user(username, session)
+    if not user.role == Roles.DEMO.value:
+        raise ForbiddenException("User is not in DEMO mode")
     await make_demo_transaction(currency_transaction.change_value, user.id, currency_transaction.currency_account_id, session)
     return SuccessfullResponse()
 
