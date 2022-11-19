@@ -1,4 +1,5 @@
 from uuid import UUID
+from typing import List
 
 from sqlalchemy import insert, select, delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -22,7 +23,7 @@ async def create_currency_account(name: str, currency_id: UUID, user_id: UUID, s
     except IntegrityError as e:
         raise NotFoundException("User/Currency not found") from e
 
-async def get_currency_accounts(user_id: UUID, session: AsyncSession) -> list[CurrencyAccount]:
+async def get_currency_accounts(user_id: UUID, session: AsyncSession) -> List[CurrencyAccount]:
     query = select(CurrencyAccount).where(
         CurrencyAccount.user_id == user_id
     )
@@ -42,7 +43,7 @@ async def delete_currency_account(currency_account_id: UUID, user_id: UUID, sess
     except IntegrityError as e:
         raise NotFoundException("User/Currency not found") from e
     
-async def get_currencies(session: AsyncSession) -> list[Currency]:
+async def get_currencies(session: AsyncSession) -> List[Currency]:
     query = select(CurrencyAccount)
     result = await session.execute(query).scalars().all()
     return result
