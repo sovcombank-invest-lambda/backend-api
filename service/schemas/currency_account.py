@@ -12,6 +12,7 @@ class CurrencyAccountIn(BaseModel):
     name: str = Field(..., description="Название валютного счета")
     
 class CurrencyAccountOut(BaseModel):
+    id: str = Field(..., description='UUID валютного счета')
     name: str = Field(..., description='Название валютного счета')
     value: float = Field(..., description='Состояние счета')
     created_at: datetime = Field(..., description='Дата создания')
