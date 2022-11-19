@@ -9,7 +9,7 @@ from service.utils.logger import Log
 
 from service.endpoints.auth import auth_router
 from service.endpoints.currency_account import currency_account_router
-
+from service.endpoints.exchange_rates import exchange_rates_router
 
 app = FastAPI(title="Invest backend API")
 
@@ -58,3 +58,4 @@ async def log_requst(request: Request, call_next):
 
 app.include_router(auth_router)
 app.include_router(currency_account_router)
+app.include_router(exchange_rates_router)

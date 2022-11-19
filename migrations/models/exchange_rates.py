@@ -19,7 +19,7 @@ class ExchangeRates(DeclarativeBase):
     id = Column(UUID, unique=True, primary_key=True, default=lambda: str(uuid.uuid4()))
     code = Column(INTEGER, nullable=False)
     symbol = Column(String, nullable=False)
-    amount = Column(INTEGER, nulalble=False)
+    amount = Column(INTEGER, nullable=False)
     rate = Column(Float, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, default = lambda x: datetime.now(UTC))
     
