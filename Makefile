@@ -17,11 +17,15 @@ run:
 	make migrate
 	uvicorn service.__main__:app  --host 0.0.0.0 --port=${FASTAPI_PORT} --log-level=warning --reload
 
+run-worker:
+	make migrate
+	python -m worker
+
 migrate:
-	cd migrations && alembic upgrade head
+	cd migrations && python -m alembic upgrade head
 
 downgrade:
-	cd migrations && alembic downgrade -1
+	cd migrations && python -m alembic downgrade -1
 
 revision:
-	cd migrations && alembic revision --autogenerate
+	cd migrations && python -m alembic revision --autogenerate
