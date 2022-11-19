@@ -7,6 +7,7 @@ Create Date: 2022-11-19 08:28:47.687951
 """
 from alembic import op
 import sqlalchemy as sa
+from migrations.models.currency import Currency
 
 
 # revision identifiers, used by Alembic.
@@ -28,6 +29,27 @@ def upgrade() -> None:
     op.create_unique_constraint(op.f('uq__users__phone'), 'users', ['phone'])
     op.drop_column('users', 'email')
     op.drop_column('users', 'username')
+    bind = op.get_bind() 
+    session = sa.orm.Session(bind=bind)
+    query1 = sa.insert(Currency).values(
+        name="₽",
+        fullname="Rubles",
+        value=1.0
+    )
+    query2 = sa.insert(Currency).values(
+        name="$",
+        fullname="American dollars",
+        value=60.0
+    )
+    query3 = sa.insert(Currency).values(
+        name="€",
+        fullname="Euro",
+        value=60.0
+    )
+    session.execute(query1)
+    session.execute(query2)
+    session.execute(query3)
+    session.commit()
     # ### end Alembic commands ###
 
 
