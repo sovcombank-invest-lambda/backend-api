@@ -45,7 +45,7 @@ async def delete_currency_account(currency_account_id: UUID, user_id: UUID, sess
     
 async def get_currencies(session: AsyncSession) -> List[Currency]:
     query = select(CurrencyAccount)
-    result = await session.execute(query).scalars().all()
+    result = (await session.execute(query)).scalars().all()
     return result
 
 async def make_demo_transaction(change_value: float, user_id: UUID, currency_account_id: UUID, session: AsyncSession) -> None:
@@ -53,7 +53,7 @@ async def make_demo_transaction(change_value: float, user_id: UUID, currency_acc
         CurrencyAccount.id == currency_account_id,
         CurrencyAccount.user_id == user_id
     )
-    result = await session.execute(query).scalars().first()
+    result = (await session.execute(query)).scalars().first()
     query1 = update(CurrencyAccount).values(
         value=result.value+change_value
     ).where(
