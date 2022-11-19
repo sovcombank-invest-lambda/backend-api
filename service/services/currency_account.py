@@ -61,7 +61,7 @@ async def make_demo_transaction(change_value: float, user_id: UUID, currency_acc
         CurrencyAccount.user_id == str(user_id)
     )
     query2 = insert(Transactions).values(
-        currency_account_id = currency_account_id,
+        currency_account_id = str(currency_account_id),
         change_value = change_value
     )
     try:
