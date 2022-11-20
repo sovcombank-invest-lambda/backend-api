@@ -34,4 +34,10 @@ class Currency(BaseModel):
 class CurrencyTransaction(BaseModel):
     change_value: float = Field(..., description="Изменение средств на счете")
     currency_account_id: UUID = Field(..., description="UUID валютного счета")
-    
+
+class CurrencyTransfer(BaseModel):
+    change_value: float = Field(..., description="Изменение средств на счете")
+    currency_account_id_from: UUID = Field(..., description="UUID валютного счета списания")
+    currency_account_id_to: UUID = Field(..., description="UUID валютного счетта начисления")
+
+

@@ -14,7 +14,7 @@ services:
 	docker compose up -d postgresql
 
 run:
-	make migrate
+	make upgrade && make upgrade
 	python -m uvicorn service.__main__:app  --host 0.0.0.0 --port=${FASTAPI_PORT} --log-level=warning --reload &
 
 run-worker:
@@ -23,6 +23,9 @@ run-worker:
 
 migrate:
 	cd migrations && python -m alembic upgrade head
+
+upgrade:
+	cd migrations && python -m alembic upgrade +1
 
 downgrade:
 	cd migrations && python -m alembic downgrade -1
