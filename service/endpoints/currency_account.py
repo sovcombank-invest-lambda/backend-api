@@ -25,7 +25,7 @@ async def account_get(
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     user = await get_user(username, session)
-    if not user.role in {Roles.DEMO.value, Roles.REGULAR}:
+    if not user.role in {Roles.DEMO, Roles.REGULAR}:
         raise ForbiddenException("User is not in DEMO mode")
     accounts = await get_currency_accounts(user.id, session)
     return [CurrencyAccountOut.from_orm(account) for account in accounts]
@@ -37,7 +37,7 @@ async def account_create(
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     user = await get_user(username, session)
-    if not user.role == Roles.DEMO.value:
+    if not user.role == Roles.DEMO:
         raise ForbiddenException("User is not in DEMO mode")
     # add account evaluation for REGULAR user
     await create_currency_account(currency_account.name, currency_account.currency_id, user.id, session)
@@ -50,7 +50,7 @@ async def account_delete(
         username: str = Depends(get_current_user),
         session: AsyncSession = Depends(get_session)) -> SuccessfullResponse:
     user = await get_user(username, session)
-    if not user.role in {Roles.DEMO.value, Roles.REGULAR}:
+    if not user.role in {Roles.DEMO, Roles.REGULAR}:
         raise ForbiddenException("User is not in DEMO mode")
     await delete_currency_account(currency_account_delete.currency_account_id, user.id, session)
     return SuccessfullResponse()
@@ -79,7 +79,7 @@ async def account_get(
     session: AsyncSession = Depends(get_session)
 ) -> SuccessfullResponse:
     user = await get_user(username, session)
-    if not user.role == Roles.DEMO.value:
+    if not user.role == Roles.DEMO:
         raise ForbiddenException("User is not in DEMO mode")
     await make_demo_transaction(currency_transaction.change_value, user.id, currency_transaction.currency_account_id, session)
     return SuccessfullResponse()
