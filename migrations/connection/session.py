@@ -23,7 +23,6 @@ class SessionManager:
         return sessionmaker(self.engine, class_=AsyncSession, expire_on_commit=False)
 
     def refresh(self) -> None:
-        print(get_postgres_settings().db_uri)
         self.engine = create_async_engine(get_postgres_settings().db_uri, echo=True, future=True)
 
 
