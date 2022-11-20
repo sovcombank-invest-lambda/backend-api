@@ -12,6 +12,7 @@ from service.endpoints.currency_account import currency_account_router
 from service.endpoints.exchange_rates import exchange_rates_router
 from service.endpoints.prediction import predict_router
 from service.endpoints.statistics import statistics_router
+from service.endpoints.admin import admin_router
 
 app = FastAPI(title="Invest backend API")
 origins = ["*"]
@@ -71,3 +72,4 @@ app.include_router(currency_account_router)
 app.include_router(exchange_rates_router)
 app.include_router(predict_router)
 app.include_router(statistics_router)
+app.include_router(admin_router)

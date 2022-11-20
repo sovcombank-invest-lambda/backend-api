@@ -15,4 +15,8 @@ class UserOut(BaseModel):
     id: UUID = Field(..., description="UUID пользователя")
     phone: str = Field(..., description="Номер телефона")
     class Config:
-        orm_mode = true
+        orm_mode = True
+
+class RequestOut(BaseModel):
+    creator_id: UUID = Field(..., description="UUID создателя заявки")
+    created_at: datetime = Field(..., description="Дата создания заявки")

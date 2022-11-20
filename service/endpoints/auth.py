@@ -9,7 +9,7 @@ from service.utils.auth import create_access_token, get_password_hash, verify_pa
 from service.exceptions.common import ForbiddenException 
 from service.schemas.common import SuccessfullResponse, TokenOut
 from migrations.connection.session import get_session
-from service.services.auth import add_new_user, get_user
+from service.services.auth import add_new_user, get_user, add_task_for_verification
 from service.schemas.auth import UserIn
 
 auth_router = APIRouter(tags=["Аутентификация"])
@@ -26,6 +26,7 @@ async def user_register(
     '''
     request.password = get_password_hash(request.password)
     await add_new_user(request.username, request.password, session)
+    await add_task_for_verification(request.username, session)
     return SuccessfullResponse()
 
 
