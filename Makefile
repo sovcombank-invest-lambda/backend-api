@@ -14,15 +14,18 @@ services:
 	docker compose up -d postgresql
 
 run:
-	make upgrade || make upgrade || true
+	make migrate-fail-safe
 	python -m uvicorn service.__main__:app  --host 0.0.0.0 --port=${FASTAPI_PORT} --log-level=warning --reload &
 
 run-worker:
-	make migrate
+	make migrate-fail-safe
 	python -m worker
 
 migrate:
 	cd migrations && python -m alembic upgrade head
+
+migrate-fail-safe:
+	make upgrade || make upgrade || make upgrade || true
 
 upgrade:
 	cd migrations && python -m alembic upgrade +1

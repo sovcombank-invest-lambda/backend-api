@@ -13,6 +13,7 @@ from migrations.models.currency_account import CurrencyAccount
 from migrations.models.news import News
 from migrations.models.transactions import Transactions
 from migrations.models.exchange_rates import ExchangeRates
+from migrations.models.requests import Requests
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
